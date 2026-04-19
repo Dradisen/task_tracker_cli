@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Short: "Программа-задачник",
 	Long:  "Длинное описание программы",
 	Run: func(cmd *cobra.Command, args []string) {
-		// fmt.Println("TASK-CLI", args)
+
 	},
 }
 
