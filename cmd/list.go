@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var list []string
+var list []Task
 
 var listCmd = &cobra.Command{
 	Use:   "list",

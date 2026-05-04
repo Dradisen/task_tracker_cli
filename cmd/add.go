@@ -11,13 +11,13 @@ var text string
 var createCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Добавить",
-	// Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("ADD, ", text, args)
+		fmt.Println("ADD: ", text, args)
 	},
 }
 
 func init() {
 	createCmd.Flags().StringVarP(&text, "name", "n", "", "Добавление объекта/строки в список")
+
 	rootCmd.AddCommand(createCmd)
 }

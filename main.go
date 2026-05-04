@@ -7,53 +7,46 @@ import (
 	"task_tracker_cli/cmd"
 )
 
-type Row struct {
-	id          int    `json:id`
-	description string `json:description`
-	status      string `json:status`
-	createdAt   int    `json:createdAt`
-	updatedAt   int    `json:updatedAt`
-}
+// type Row struct {
+// 	id          int    `json:id`
+// 	description string `json:description`
+// 	status      string `json:status`
+// 	createdAt   int    `json:createdAt`
+// 	updatedAt   int    `json:updatedAt`
+// }
 
-var example = &Row{
-	id:          1,
-	description: "sadasd",
-	status:      "test",
-	createdAt:   12321,
-	updatedAt:   12322,
+// Запись в файл задачи
+func write_task(file *os.File, task *cmd.Task) (int, error) {
+
+	results, err := json.Marshal(task)
+	if err != nil {
+		return -1, err
+	}
+
+	len, err := file.WriteString(string(results) + "\n")
+
+	if err != nil {
+		return -1, err
+	}
+	return len, nil
 }
 
 func main() {
+	var lst cmd.ListTask
 
-	filename := "list.json"
+	lst.LoadTasks()
+	lst.Add(cmd.Task{Id: 1})
+	lst.Add(cmd.Task{Id: 2})
+	lst.Add(cmd.Task{Id: 3})
 
-	bytes, err := os.ReadFile(filename)
+	err := lst.WriteToFile()
 
-	f, err := os.Open(filename)
 	if err != nil {
-		fmt.Println("ERR", err)
+		fmt.Println("ERROR", err)
 		return
 	}
 
-	defer f.Close()
-
-	results, err := json.Marshal(example)
-	if err != nil {
-		fmt.Println("ERR", err)
-		return
-	}
-	fmt.Println("JSON RESULT", string(results))
-
-	n, err := f.Read(bytes)
-	if err != nil {
-		fmt.Println("ERR", err)
-		return
-	}
-	fmt.Println(n)
-
-	// b := []byte{`dasd`}
-	// f.Write(b)
-	print("BYTES: ", example, string(bytes))
+	fmt.Println("???", lst)
 
 	cmd.Execute()
 }
