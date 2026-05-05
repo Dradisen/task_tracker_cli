@@ -6,18 +6,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var text string
-
 var createCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Добавить",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("ADD: ", text, args)
+		var list_task ListTask
+		list_task.LoadTasks()
+		id, err := list_task.Add(args[0])
+		if err != nil {
+			return
+		}
+		list_task.Commit()
+		fmt.Printf("Task added successfully (ID: %d)\n", id)
+
 	},
 }
 
 func init() {
-	createCmd.Flags().StringVarP(&text, "name", "n", "", "Добавление объекта/строки в список")
-
 	rootCmd.AddCommand(createCmd)
 }

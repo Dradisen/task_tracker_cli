@@ -1,19 +1,24 @@
 package cmd
 
 import (
-	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
-var id int
-var object string
-
 var updateCmd = &cobra.Command{
 	Use:   "update",
 	Short: "Обновление объекта/строки",
+	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("UPDATE", cmd, args)
+		var list_task ListTask
+		list_task.LoadTasks()
+		id, err := strconv.Atoi(args[0])
+		if err != nil {
+			return
+		}
+		list_task.Update(id, string(args[1]))
+		list_task.Commit()
 	},
 }
 
