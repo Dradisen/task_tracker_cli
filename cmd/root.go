@@ -196,16 +196,19 @@ func (self *ListTask) Commit() error {
 var rootCmd = &cobra.Command{
 	Use:   "task-cli",
 	Short: "Программа-задачник",
-	Long:  "Длинное описание программы",
-	Run: func(cmd *cobra.Command, args []string) {
-
-	},
+	Long:  "Проект «Трекер задач» предназначен для отслеживания и управления вашими задачами",
 }
 
 func Execute() {
+	rootCmd.AddCommand(updateCmd)
+	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(deleteCmd)
+	rootCmd.AddCommand(markInProgressCmd)
+	rootCmd.AddCommand(markDoneCmd)
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println("ERROR", err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }

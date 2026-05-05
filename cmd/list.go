@@ -22,7 +22,3 @@ var listCmd = &cobra.Command{
 		task_list.Print()
 	},
 }
-
-func init() {
-	rootCmd.AddCommand(listCmd)
-}

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -15,14 +16,10 @@ var createCmd = &cobra.Command{
 		list_task.LoadTasks()
 		id, err := list_task.Add(args[0])
 		if err != nil {
-			return
+			os.Exit(1)
 		}
 		list_task.Commit()
 		fmt.Printf("Task added successfully (ID: %d)\n", id)
 
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(createCmd)
 }

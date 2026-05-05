@@ -1,12 +1,13 @@
 package cmd
 
 import (
+	"os"
 	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
-var deleteCmd = cobra.Command{
+var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Удаление объекта",
 	Args:  cobra.ExactArgs(1),
@@ -15,13 +16,9 @@ var deleteCmd = cobra.Command{
 		list_task.LoadTasks()
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
-			return
+			os.Exit(1)
 		}
 		list_task.Delete(id)
 		list_task.Commit()
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(&deleteCmd)
 }

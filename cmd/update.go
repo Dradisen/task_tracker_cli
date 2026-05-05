@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"os"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -15,13 +16,9 @@ var updateCmd = &cobra.Command{
 		list_task.LoadTasks()
 		id, err := strconv.Atoi(args[0])
 		if err != nil {
-			return
+			os.Exit(1)
 		}
 		list_task.Update(id, string(args[1]))
 		list_task.Commit()
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(updateCmd)
 }
